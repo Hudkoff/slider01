@@ -1,2 +1,2 @@
-slider01
+Beware of the Dark Side!
 ========
