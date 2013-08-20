@@ -1,0 +1,9 @@
+.slideWrapper {
+	border: 1px solid red;
+	overflow: visible;
+	position: relative;
+}
+.slide {
+	position: absolute;
+	display: block;
+}
