@@ -1,9 +1,36 @@
 .slideWrapper {
-	border: 1px solid red;
-	overflow: visible;
+	border: 3px solid #eee;
+	overflow: hidden;
 	position: relative;
+	margin: 100px auto 0;
 }
 .slide {
 	position: absolute;
 	display: block;
+}
+.prev,
+.next {
+	display: block;
+	position: absolute;
+	z-index: 999;
+	top: 0;
+	bottom: 0;
+	width: 100px;
+	/*height: 100px;
+	cursor: pointer;
+	background: rgba(225,225,225,0.1);*/
+}
+.slideWrapper:hover  a,
+.slideWrapper:hover  a {
+	background: rgba(225,225,225,0.3);
+}
+a.prev:hover,
+a.next:hover {
+	background: rgba(225,225,225,0.6);
+}
+.prev {
+	left: 0;
+}
+.next {
+	right: 0;
 }
