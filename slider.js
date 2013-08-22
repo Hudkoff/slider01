@@ -30,27 +30,25 @@ function slider(parameters) {
 	prevNav.href = "#";
 	var nextNav = prevNav.cloneNode(true);
 	nextNav.className = "next";
-	// insert two links
+	// lets insert two links
 	placeholder.appendChild(prevNav);
 	placeholder.appendChild(nextNav);
 	
 	///////////////////////// attaching events to controls /////////////////////////
-	//prevNav.id = "prev";
-	//document.getElementById('prev').onclick = function() { alert('Клик') }
-	//prevNav.setAttribute("onclick", "alert()");
-	//nextNav.setAttribute("onclick", "prev()");
-	//prevNav.addEventListener('click', function() { alert('sdfs') }, false);
-	//document.getElementsByTagName("a")[0].addEventListener('click', function() { alert('dsfsdf') }, false);
-	document.getElementsByClassName("slideWrapper")[0].addEventListener('click', function() {
-		clearInterval(timer);
+	prevNav.addEventListener('click', function() { 
+		window.clearInterval(timer);
 		letsCount(-1);
 		return false;
-	}, false);
-	
+	}); 
+	nextNav.addEventListener('click', function() { 
+		window.clearInterval(timer);
+		letsCount(+1);
+		return false;
+	}); 
 
 	///////////////////////// start auto rotating /////////////////////////
 	showSlide(0, direction);
-	var timer = setInterval(function() { letsCount(direction) }, duration); // +1 or -1 for now only!
+	var timer = window.setInterval(function() { letsCount(direction) }, duration); // +1 or -1 for now only!
 
 	///////////////////////// functions /////////////////////////
 	/**
@@ -76,7 +74,7 @@ function slider(parameters) {
 	 * @param  {+1 | -1} direction       
 	 */
 	function showSlide(whatSlideToShow, direction) {
-		placeholder.innerHTML += makeImgTag(imagesArray[whatSlideToShow]); // append <img> with next or previous jpg
+		placeholder.appendChild( makeImgTag(imagesArray[whatSlideToShow]) ); // append <img> with next or previous jpg
 		animation((direction > 0)? width : -width, 0);
 	} 
 
@@ -87,7 +85,10 @@ function slider(parameters) {
 	 * @return {string}              full <img> tag
 	 */
 	function makeImgTag(imgFilename) {
-		var imgTag = '<img src="' + path + imgFilename + '" class="slide" alt="" />';
+		var imgTag = document.createElement("img");
+		imgTag.className = "slide";
+		imgTag.href = "#";
+		imgTag.src = path + imgFilename;
 		return imgTag;
 	} 
 
@@ -103,26 +104,22 @@ function slider(parameters) {
 		curSlide.style.left = fromPos + "px";
 		var slidePos = fromPos;
 
-		//sliding = clearInterval(sliding); // just in case
-		
-		setTimeout(function run() {
-		//sliding = setTimeout(function run() {
+		window.setTimeout(function run() {
 		//sliding = setInterval(function() {
 			if (fromPos >= 0 && slidePos > toPos ) {
 				slidePos -= width/20;
 				curSlide.style.left = slidePos + "px";
-				sliding = setTimeout(run, 10)
+				sliding = window.setTimeout(run, 10);
 			} else if (fromPos <= 0 && slidePos < toPos ) {
 				slidePos += width/20;
 				curSlide.style.left = slidePos + "px";
-				sliding = setTimeout(run, 10)
+				sliding = window.setTimeout(run, 10);
 			} else {
-				//clearInterval(sliding); // does not clear interval ??
+				//clearInterval(sliding); 
 				if (curSlide.previousElementSibling && curSlide.previousElementSibling.className == "slide") {
-					placeholder.removeChild(curSlide.previousElementSibling)  // WTF? why function don't stop after clearInterval - we need remove 1st <img> once manualy
+					placeholder.removeChild(curSlide.previousElementSibling);
 				}
 				curSlide.style.left = toPos + "px";
-				//console.log( "piu piu piu" )
         	}
 	    }, 10 );
 	} 
