@@ -16,7 +16,7 @@ function Slider(parameters) {
 	var imagesArray = parameters.images.replace(new RegExp(" ",'g'),"").split(","); // remove all empty spaces and make Array
 	var placeholder = document.getElementById(parameters.placeholder);
 	var width = parameters.width? parseInt(parameters.width) : 472; // some verification and magic should be there
-    var height = parameters.height?  parseInt(parameters.height) : 238;
+	var height = parameters.height?  parseInt(parameters.height) : 238;
 	var duration = parameters.duration? parameters.duration : "2000";
 	var direction = parameters.direction? parameters.direction : +1;
 
