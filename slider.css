@@ -1,22 +1,32 @@
 .slideWrapper {
 	border: 3px solid #eee;
+<<<<<<< HEAD
 	position: relative;
 	margin: 100px auto 0;
 }
 .slidesContainer {
 	overflow: hidden;
 	position: relative;
+=======
+	overflow: hidden;
+	position: relative;
+	margin: 100px auto 0;
+>>>>>>> dcbaab308e11c6efa15c936ad6793057d25385f1
 }
 .slide {
 	position: absolute;
 	display: block;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dcbaab308e11c6efa15c936ad6793057d25385f1
 .prev,
 .next {
 	display: block;
 	position: absolute;
 	z-index: 999;
+<<<<<<< HEAD
 	top: 40%;
 	width: 50px;
 	height: 50px;
@@ -95,4 +105,26 @@ a.next:hover {
 .tmbn:hover {
 	opacity: 1;
 	box-shadow: 0 0 5px rgba(0,0,0,0.3);
+=======
+	top: 0;
+	bottom: 0;
+	width: 100px;
+	/*height: 100px;
+	cursor: pointer;
+	background: rgba(225,225,225,0.1);*/
+}
+.slideWrapper:hover  a,
+.slideWrapper:hover  a {
+	background: rgba(225,225,225,0.3);
+}
+a.prev:hover,
+a.next:hover {
+	background: rgba(225,225,225,0.6);
+}
+.prev {
+	left: 0;
+}
+.next {
+	right: 0;
+>>>>>>> dcbaab308e11c6efa15c936ad6793057d25385f1
 }
