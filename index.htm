@@ -9,19 +9,26 @@
 </head>
 <body>
 <div id="here"></div>
-
+<div id="here1"></div>
 <script>
-	//this script must be at the bottom
-	slider({
-		path: "", // folder name or path "folder1/folder2"
-		images: "rotating-01.jpg, rotating-02.jpg, rotating-03.jpg,rotating-04.jpg, rotating-05.jpg, rotating-06.jpg", // must be separates by ", " or ","
-		placeholder: "here", // id of element to which insert stuff
+	var slider01 = new Slider({
+		path: "",
+		images: "rotating-01.jpg, rotating-02.jpg, rotating-03.jpg,rotating-04.jpg, rotating-05.jpg, rotating-06.jpg",
+		placeholder: "here",
 		width: 472,
 		height: 238,
-		direction: +1, // -1 or +1
-		duration: 1000,
-
+		direction: +1,
+		duration: 1500
 	});
+//	var slider02 = new Slider({
+//		path: "",
+//		images: "rotating-01.jpg,rotating-05.jpg, rotating-06.jpg",
+//		placeholder: "here1",
+//		width: 472,
+//		height: 238,
+//		direction: +1,
+//		duration: 1500
+//	});
 </script>
 </body>
 </html>
