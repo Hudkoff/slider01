@@ -28,22 +28,21 @@ function Slider(parameters) {
 
 
 	/**
-	 * counts from 1 to (numberOfSlides-1) [or backward, depends on direction] 
+	 * counts from 1 to (imagesArray.length-1) [or backward, depends on direction] 
 	 * @param  {number} direction	(+1 | -1)
 	 *
 	 * @return {number} step		N of current slide
 	 */
 	function counter(direction) {
 		step = step + direction;
-		if (step > numberOfSlides - 1) {
+		if (step > imagesArray.length - 1) {
 			step = 0;
 		}
 		if (step < 0) {
-			step = numberOfSlides - 1;
+			step = imagesArray.length - 1;
 		}
 		return step;
 	} 
-
 
 	/**
 	 * appends image tag to container and starts animate
@@ -61,7 +60,6 @@ function Slider(parameters) {
 		return newSlide;
 	}
 
-
 	/**
 	 * converts image name to image tag
 	 * @param imgFilename {string}	imgFilename  single image name from array
@@ -77,6 +75,32 @@ function Slider(parameters) {
 		return imgTag;
 	}
 
+	/**
+	 * animates prew and next slides and step++
+	 * @param direction {string}	+1 or -1
+	 */
+	function doIt(direction) {
+		var shift = direction > 0 ? -width : width;
+
+		self.animate({															// moving CURRENT slide
+			target: newSlide,
+			shift: shift,
+			removeAfterMoving: true												// and delete CURRENT slide
+		});
+		counter(direction);														// step++
+		newSlide = addSlide(step, direction > 0 ? width : -width);				// add NEXT slide
+		self.animate({															// moving NEXT slide
+			target: newSlide,
+			shift: shift,
+			removeAfterMoving: false
+		});
+	}
+
+
+
+
+
+
 
 	// --------------------- PUBLIC ----------------------------
 
@@ -88,8 +112,10 @@ function Slider(parameters) {
 		var prevNav = document.createElement("a");
 		prevNav.className = "prev";
 		prevNav.href = "#";
+		prevNav.title = "prev";
 		var nextNav = prevNav.cloneNode(true);
 		nextNav.className = "next";
+		nextNav.title = "next";
 		// lets insert two links
 		placeholder.appendChild(prevNav);
 		placeholder.appendChild(nextNav);
@@ -105,7 +131,6 @@ function Slider(parameters) {
 			e.preventDefault();
 		});
 	};
-	this.generateNav();
 
 	/**
 	 * 1) generates HTML of miniatures
@@ -115,8 +140,10 @@ function Slider(parameters) {
 		var playNav = document.createElement("a");
 		playNav.className = "play";
 		playNav.href = "#";
+		playNav.title = "play";
 		var pauseNav = playNav.cloneNode(true);
 		pauseNav.className = "pause";
+		pauseNav.title = "pause";
 		// lets insert two links
 		placeholder.appendChild(playNav);
 		placeholder.appendChild(pauseNav);
@@ -133,7 +160,6 @@ function Slider(parameters) {
 			e.preventDefault();
 		});
 	};
-	this.generatePlayPause();
 
 	/**
 	 * generates HTML of slides wrapper
@@ -145,7 +171,6 @@ function Slider(parameters) {
 		el.style.width = width + "px";
 		el.style.height = height + "px";
 	};
-	this.generateSlidesWrapper();
 	
 	/**
 	 * 1) generates HTML of miniatures
@@ -161,13 +186,15 @@ function Slider(parameters) {
 			var tmbn = makeImgTag(imagesArray[i], "tmbn");
 			el.appendChild(tmbn);
 			tmbn.addEventListener('click', function(e) {
-				//window.clearInterval(timer);
-				console.log(i, step, i - step);
+				window.clearInterval(timer);
+				var howManySteps = i - step;
+				for (var j = 0; j < howManySteps; j++) {
+					console.log(i, step, howManySteps);
+				};
 				e.preventDefault();
 			});
 		}
 	};
-	this.generateThumbnails();
 
 	/**
 	 * moves last of slides from [fromPos] to [toPos] and removes previous slide after that
@@ -199,33 +226,19 @@ function Slider(parameters) {
 			}
 		}, 10 );
 	};
+	// how to move this outside?
 
 
 
 
 
+	this.generateNav();
+	this.generatePlayPause();
+	this.generateSlidesWrapper();
+	this.generateThumbnails();
 
-	///////////////////////// start auto rotating /////////////////////////
 	var newSlide = addSlide(0, 0);
 	var step = 0;
-	var numberOfSlides = imagesArray.length;
-
-	function doIt(direction) {
-		var shift = direction > 0 ? -width : width;
-
-		self.animate({															// moving CURRENT slide
-			target: newSlide,
-			shift: shift,
-			removeAfterMoving: true												// and delete CURRENT slide
-		});
-		counter(direction);														// step++
-		newSlide = addSlide(step, direction > 0 ? width : -width);				// add NEXT slide
-		self.animate({															// moving NEXT slide
-			target: newSlide,
-			shift: shift,
-			removeAfterMoving: false
-		});
-	}
 
 	var timer = window.setInterval(function() {
 		doIt(+1);
